@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "declaration": true,
+        "sourceMap": true,
+        "outDir": "./test-dist"
+    },
+    "files": [
+        //insert your test files here
+    ]
+}

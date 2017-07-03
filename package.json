@@ -1,0 +1,56 @@
+{
+  "name": "pg-to-jsonschema",
+  "description": "Postgres DB to json schema export",
+  "version": "1.0.0",
+  "main": "dev/index.js",
+  "typings": "dev/index",
+  "keywords": [
+    "json-schema",
+    "json",
+    "postgresql"
+  ],
+  "scripts": {
+    "start": "node dev/index.js",
+    "sql:build": "cp -r sql/ dev/sql/",
+    "sql:build_prod": "cp -r sql/ lib/sql/",
+    "clean:test": "rm -rf test-dev/*",
+    "clean:dev": "rm -rf dev/*",
+    "clean:lib": "rm -rf lib/*",
+    "build": "tsc --project build-tsconfig.json",
+    "build_prod": "npm run build && browserify --node -t brfs -s main dev/index.js > dev/bundle.js && npm run minify",
+    "minify": "uglifyjs dev/bundle.js --screw-ie8 --compress --mangle --output lib/bundle.min.js",
+    "build:test": "tsc --project test-tsconfig.json && cp -r assets test-dev/",
+    "test": "npm run build:test && node node_modules/.bin/mocha -w --timeout 3000 test-dev/test-src",
+    "prebuild": "npm run clean:dev && npm run clean:lib && npm run sql:build && npm run sql:build_prod",
+    "pretest": "npm run clean:test"
+  },
+  "author": "eugene.tomsen@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^4",
+    "brfs": "^1.4.3",
+    "fs": "0.0.1-security",
+    "lodash.groupby": "^4.6.0",
+    "lodash.keyby": "^4.6.0",
+    "lodash.map": "4.4.0",
+    "lodash.transform": "^4.6.0",
+    "pg-promise": "^6.3.0",
+    "typescript": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/should": "^8.3.0",
+    "browserify": "^14.4.0",
+    "camelcase": "^4.1.0",
+    "mocha": "^3.4.2",
+    "mocha-typescript": "^1.1.5",
+    "output-file": "^1.1.1",
+    "should": "^11.2.1",
+    "supertest": "^3.0.0",
+    "typescript": "^2.3.2",
+    "uglify-es": "^3.0.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etomsen/pg-to-jsonschema.git"
+  }
+}

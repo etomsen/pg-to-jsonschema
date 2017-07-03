@@ -1,0 +1,22 @@
+{
+    "version": "0.0.1",
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "preserveConstEnums": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "declaration": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "lib": [
+            "dom",
+            "es6"
+        ]
+    },
+    "filesGlob": [
+        "!./node_modules/**/*.ts"
+    ]
+}
