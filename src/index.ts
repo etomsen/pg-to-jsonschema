@@ -4,6 +4,7 @@ import * as _transform from 'lodash.transform';
 import * as _keyBy from 'lodash.keyby';
 import pg from 'pg';
 import * as fs from 'fs';
+import * as minimist from 'minimist';
 import * as pgPromise from 'pg-promise';
 import { IMain, IDatabase } from 'pg-promise';
 
@@ -103,10 +104,32 @@ export async function generateSchema(connectionString: string, outDir: string){
         const constraints = _transform(_groupBy(schema.constraints, 'table_name'), (result, table, tableName) => {
           result[tableName] = _groupBy(table, 'column_name');
         });
+        let fileContent;
+        let fileName;
         for (var t in tables) {
-            fs.writeFileSync(`${outDir}/${t}.table.json`, createTableSchema(t, tables[t].columns));
+            fileContent = createTableSchema(t, tables[t].columns);
+            fileName = `${outDir}/${t}.table.json`;
+            fs.writeFileSync(__dirname + fileName, fileContent);
         }
     } catch (error) {
         console.error(error);
     }
 }
+// const args = minimist(process.argv.slice(2));
+// if (!args.c) {
+//     console.log('Connection string is not specified');
+//     process.exit();
+// }
+// if (!args.o) {
+//     console.log('Out dir is not specified');
+//     process.exit();
+// }
+// generateSchema(args.c, args.c)
+//     .then(() => {
+//         console.log('done.');
+//         process.exit();
+//     })
+//     .catch((err) => {
+//         console.error(err);
+//         process.exit();
+//     });

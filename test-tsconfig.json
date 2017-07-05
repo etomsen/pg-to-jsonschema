@@ -6,7 +6,7 @@
         "experimentalDecorators": true,
         "declaration": true,
         "sourceMap": true,
-        "outDir": "./test-dist"
+        "outDir": "./test-dist/src"
     },
     "files": [
         //insert your test files here

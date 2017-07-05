@@ -11,7 +11,7 @@
         "experimentalDecorators": true,
         "declaration": true,
         "suppressImplicitAnyIndexErrors": true,
-        "outDir": "./dev",
+        "outDir": "./dist/src",
         "lib": [
             "dom",
             "ES2015"
