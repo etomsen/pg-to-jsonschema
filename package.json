@@ -2,7 +2,7 @@
   "name": "pg-to-jsonschema",
   "description": "Postgres DB to json schema export",
   "version": "1.0.0",
-  "main": "dev/index.js",
+  "main": "lib/bundle.min.js",
   "typings": "dev/index",
   "keywords": [
     "json-schema",
@@ -10,7 +10,7 @@
     "postgresql"
   ],
   "scripts": {
-    "start": "node dev/index.js",
+    "start": "node lib/bundle.min.js",
     "sql:build": "cp -r sql/ dev/sql/",
     "sql:build_prod": "cp -r sql/ lib/sql/",
     "clean:test": "rm -rf test-dev/*",
