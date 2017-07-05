@@ -3,7 +3,7 @@ import * as _groupBy from 'lodash.groupby';
 import * as _transform from 'lodash.transform';
 import * as _keyBy from 'lodash.keyby';
 import pg from 'pg';
-import * as fs from 'fs';
+import * as outputFile from 'output-file';
 import * as minimist from 'minimist';
 import * as pgPromise from 'pg-promise';
 import { IMain, IDatabase } from 'pg-promise';
@@ -109,7 +109,13 @@ export async function generateSchema(connectionString: string, outDir: string){
         for (var t in tables) {
             fileContent = createTableSchema(t, tables[t].columns);
             fileName = `${outDir}/${t}.table.json`;
-            fs.writeFileSync(__dirname + fileName, fileContent);
+            outputFile(__dirname + fileName, fileContent, function(err, createdDir) {
+            if (err) {
+                console.error(`Error generating ${__dirname + fileName}`, err);
+            } else {
+                console.log(`${__dirname + fileName} generated!`);
+            }
+        });
         }
     } catch (error) {
         console.error(error);

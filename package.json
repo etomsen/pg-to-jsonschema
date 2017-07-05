@@ -1,7 +1,7 @@
 {
   "name": "pg-to-jsonschema",
   "description": "Postgres DB to json schema export",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/src/index.js",
   "keywords": [
     "json-schema",
@@ -31,6 +31,7 @@
     "lodash.keyby": "^4.6.0",
     "lodash.map": "4.4.0",
     "lodash.transform": "^4.6.0",
+    "output-file": "^1.1.1",
     "pg-promise": "^6.3.0",
     "typescript": "^2.3.2"
   },

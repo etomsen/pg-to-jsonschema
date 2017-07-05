@@ -12,7 +12,7 @@ const sql_1 = require("./sql");
 const _groupBy = require("lodash.groupby");
 const _transform = require("lodash.transform");
 const _keyBy = require("lodash.keyby");
-const fs = require("fs");
+const outputFile = require("output-file");
 const pgPromise = require("pg-promise");
 function createColumnSchema(columnName, columnType) {
     let result = `\t"${columnName}": {\n`;
@@ -104,7 +104,14 @@ function generateSchema(connectionString, outDir) {
             for (var t in tables) {
                 fileContent = createTableSchema(t, tables[t].columns);
                 fileName = `${outDir}/${t}.table.json`;
-                fs.writeFileSync(__dirname + fileName, fileContent);
+                outputFile(__dirname + fileName, fileContent, function (err, createdDir) {
+                    if (err) {
+                        console.error(`Error generating ${__dirname + fileName}`, err);
+                    }
+                    else {
+                        console.log(`${__dirname + fileName} generated!`);
+                    }
+                });
             }
         }
         catch (error) {
