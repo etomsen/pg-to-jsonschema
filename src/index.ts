@@ -10,7 +10,7 @@ import { IMain, IDatabase } from 'pg-promise';
 
 type TColumnType = 'integer' | 'time without time zone' | 'timestamp without time zone' | 'character varying' | 'uuid' | 'date' | 'double precision' | 'bigint' | 'bytea';
 
-function createColumnSchema(columnName: string, columnType: TColumnType){
+function createColumnSchema(columnName: string, columnType: TColumnType, maxLength: number, description: string){
     let result: string = `\t"${columnName}": {\n`;
     switch (columnType) {
         case 'integer':
@@ -18,7 +18,11 @@ function createColumnSchema(columnName: string, columnType: TColumnType){
             result += `\t\t\t"type": "number"\n\t\t}`;
             break;
         case 'character varying': 
-            result += `\t\t\t"type": "string"\n\t\t}`;
+            result += `\t\t\t"type": "string"`;
+            if (maxLength) {
+                result += `,\n\t\t\t"maxLength": ${+maxLength}`;
+            }
+            result += `\n\t\t}`;
             break;
         case 'timestamp without time zone':
             result += `\t\t\t"type": "number",\n`;
@@ -54,7 +58,7 @@ function createTableSchema(tableName: string, columns: any[]): string{
     const required: string[] = [];
     let p: string;
     for (var c in columns) {
-        p = `\t${createColumnSchema(c, columns[c].data_type)}`;
+        p = `\t${createColumnSchema(c, columns[c].data_type, columns[c].character_maximum_length, columns[c].col_description)}`;
         if (p && properties) {
             properties += `,\n`;
         }

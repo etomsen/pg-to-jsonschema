@@ -1,7 +1,7 @@
 {
   "name": "pg-to-jsonschema",
   "description": "Postgres DB to json schema export",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/src/index.js",
   "keywords": [
     "json-schema",

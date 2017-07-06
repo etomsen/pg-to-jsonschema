@@ -14,7 +14,7 @@ const _transform = require("lodash.transform");
 const _keyBy = require("lodash.keyby");
 const outputFile = require("output-file");
 const pgPromise = require("pg-promise");
-function createColumnSchema(columnName, columnType) {
+function createColumnSchema(columnName, columnType, maxLength, description) {
     let result = `\t"${columnName}": {\n`;
     switch (columnType) {
         case 'integer':
@@ -22,7 +22,11 @@ function createColumnSchema(columnName, columnType) {
             result += `\t\t\t"type": "number"\n\t\t}`;
             break;
         case 'character varying':
-            result += `\t\t\t"type": "string"\n\t\t}`;
+            result += `\t\t\t"type": "string"`;
+            if (maxLength) {
+                result += `,\n\t\t\t"maxLength": ${+maxLength}`;
+            }
+            result += `\n\t\t}`;
             break;
         case 'timestamp without time zone':
             result += `\t\t\t"type": "number",\n`;
@@ -57,7 +61,7 @@ function createTableSchema(tableName, columns) {
     const required = [];
     let p;
     for (var c in columns) {
-        p = `\t${createColumnSchema(c, columns[c].data_type)}`;
+        p = `\t${createColumnSchema(c, columns[c].data_type, columns[c].character_maximum_length, columns[c].col_description)}`;
         if (p && properties) {
             properties += `,\n`;
         }
