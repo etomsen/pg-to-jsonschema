@@ -109,7 +109,7 @@ export async function generateSchema(connectionString: string, outDir: string){
         for (var t in tables) {
             fileContent = createTableSchema(t, tables[t].columns);
             fileName = `${outDir}/${t}.table.json`;
-            outputFile(__dirname + fileName, fileContent, function(err, createdDir) {
+            outputFile(fileName, fileContent, function(err, createdDir) {
             if (err) {
                 console.error(`Error generating ${__dirname + fileName}`, err);
             } else {
