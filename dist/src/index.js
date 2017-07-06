@@ -104,12 +104,12 @@ function generateSchema(connectionString, outDir) {
             for (var t in tables) {
                 fileContent = createTableSchema(t, tables[t].columns);
                 fileName = `${outDir}/${t}.table.json`;
-                outputFile(__dirname + fileName, fileContent, function (err, createdDir) {
+                outputFile(fileName, fileContent, function (err, createdDir) {
                     if (err) {
-                        console.error(`Error generating ${__dirname + fileName}`, err);
+                        console.error(`Error generating ${fileName}`, err);
                     }
                     else {
-                        console.log(`${__dirname + fileName} generated!`);
+                        console.log(`${fileName} generated!`);
                     }
                 });
             }
