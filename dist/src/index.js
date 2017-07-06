@@ -15,6 +15,11 @@ const _keyBy = require("lodash.keyby");
 const outputFile = require("output-file");
 const pgPromise = require("pg-promise");
 function createColumnSchema(columnName, columnType, maxLength, description) {
+    description = description.replace(/\n|\r/g, ' ');
+    description = description.replace(/\n|\r/g, ' ');
+    description = description.replace(/\n|\r/g, ' ');
+    description = description.replace(/\n|\r/g, ' ');
+    description = description.replace(/\n|\r/g, ' ');
     let result = `\t"${columnName}": {\n`;
     switch (columnType) {
         case 'integer':

@@ -10,7 +10,13 @@ import { IMain, IDatabase } from 'pg-promise';
 
 type TColumnType = 'integer' | 'time without time zone' | 'timestamp without time zone' | 'character varying' | 'uuid' | 'date' | 'double precision' | 'bigint' | 'bytea';
 
+
 function createColumnSchema(columnName: string, columnType: TColumnType, maxLength: number, description: string){
+    description = description.replace(/\n|\r/g, ' ');
+    description = description.replace(/\n|\r/g, ' ');
+    description = description.replace(/\n|\r/g, ' ');
+    description = description.replace(/\n|\r/g, ' ');
+    description = description.replace(/\n|\r/g, ' ');
     let result: string = `\t"${columnName}": {\n`;
     switch (columnType) {
         case 'integer':
