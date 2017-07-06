@@ -19,41 +19,44 @@ function createColumnSchema(columnName, columnType, maxLength, description) {
     switch (columnType) {
         case 'integer':
         case 'bigint':
-            result += `\t\t\t"type": "number"\n\t\t}`;
+            result += `\t\t\t"type": "number"`;
             break;
         case 'character varying':
             result += `\t\t\t"type": "string"`;
-            if (maxLength) {
-                result += `,\n\t\t\t"maxLength": ${+maxLength}`;
-            }
-            result += `\n\t\t}`;
             break;
         case 'timestamp without time zone':
             result += `\t\t\t"type": "number",\n`;
-            result += `\t\t\t"format": "date-time"\n\t\t}`;
+            result += `\t\t\t"format": "date-time"`;
             break;
         case 'time without time zone':
             result += `\t\t\t"type": "string",\n`;
-            result += `\t\t\t"pattern": "^0?([0-9][0-2]?):([0-5][0-9])$"\n\t\t}`;
+            result += `\t\t\t"pattern": "^0?([0-9][0-2]?):([0-5][0-9])$"`;
             break;
         case 'uuid':
             result += `\t\t\t"type": "string",\n`;
-            result += `\t\t\t"pattern": "^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$"\n\t\t}`;
+            result += `\t\t\t"pattern": "^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$"`;
             break;
         case 'date':
             result += `\t\t\t"type": "string",\n`;
-            result += `\t\t\t"format": "date-time"\n\t\t}`;
+            result += `\t\t\t"format": "date-time"`;
             break;
         case 'double precision':
-            result += `\t\t\t"type": "number"\n\t\t}`;
+            result += `\t\t\t"type": "number"`;
             break;
         case 'bytea':
-            result += `\t\t\t"type": "string"\n\t\t}`;
+            result += `\t\t\t"type": "string"`;
             break;
         default:
             console.error(`Unknown type ${columnType}" for the field ${columnName}`);
             return '';
     }
+    if (maxLength) {
+        result += `,\n\t\t\t"maxLength": ${+maxLength}`;
+    }
+    if (description) {
+        result += `,\n\t\t\t"description": "${description}"`;
+    }
+    result += `\n\t\t}`;
     return result;
 }
 function createTableSchema(tableName, columns) {
@@ -70,7 +73,7 @@ function createTableSchema(tableName, columns) {
             required.push(c);
         }
     }
-    return `{\n\t"title": "${tableName}",\n\t"type": "object",\n\t"properties": {\n${properties}\n\t},\n\t"required": ${JSON.stringify(required)},\n\t"additionalProperties": true\n}`;
+    return `{\n\t"title": "${tableName}.table",\n\t"type": "object",\n\t"properties": {\n${properties}\n\t},\n\t"required": ${JSON.stringify(required)},\n\t"additionalProperties": true\n}`;
 }
 const options = {
     pgNative: false,
